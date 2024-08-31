@@ -33,34 +33,19 @@ import { Input } from "@/components/ui/input";
 import { clientCategories } from "@/lib/clientCategories";
 import { clientStatus } from "@/lib/clientStatus";
 import { Button } from "@/components/ui/button";
-
-const FormSchema = z.object({
-  name: z.string().min(4, {
-    message: "Collection name must be at least 4 characters",
-  }),
-  category: z.enum([
-    "limited_company_large",
-    "limited_company_small",
-    "limited_company_very_small",
-    "partnership",
-    "sole_trader",
-    "charity",
-    "other",
-  ]),
-  status: z.enum(["awaiting_ml_checks", "active", "archived"]),
-});
-
-const handleSubmit = (values: z.infer<typeof FormSchema>) => {
-  console.log({ values });
-};
+import { CreateClientSchema, CreateClientSchemaType } from "@/client";
 
 export default function NewClientPage() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<CreateClientSchemaType>({
+    resolver: zodResolver(CreateClientSchema),
     defaultValues: {
       name: "",
     },
   });
+
+  const onSubmit = (values: CreateClientSchemaType) => {
+    console.log({ values });
+  };
   return (
     <>
       <div className="flex flex-1 flex-col items-center gap-4">
@@ -77,7 +62,7 @@ export default function NewClientPage() {
             <div className="flex flex-col gap-y-6">
               <Form {...form}>
                 <form
-                  onSubmit={form.handleSubmit(handleSubmit)}
+                  onSubmit={form.handleSubmit(onSubmit)}
                   className="w-full space-y-8"
                 >
                   <FormField
