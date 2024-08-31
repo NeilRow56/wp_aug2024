@@ -9,7 +9,7 @@ import {
   FileStack,
   Globe,
   Home,
-  MapPinCheckInside,
+  MapPin,
   PoundSterlingIcon,
   SquareCheck,
   Users,
@@ -46,7 +46,7 @@ export const navLinks = [
   {
     name: "Planning",
     href: "/dashboard/planning",
-    icon: MapPinCheckInside,
+    icon: MapPin,
   },
   {
     name: "Working Papers",

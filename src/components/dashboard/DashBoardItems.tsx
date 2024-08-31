@@ -15,7 +15,7 @@ export function DashboardItems() {
           key={item.name}
           className={cn(
             pathname == item.href
-              ? "bg-muted text-primary"
+              ? "bg-muted text-lg font-bold text-primary"
               : "bg-none text-muted-foreground",
             "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary/70",
           )}
