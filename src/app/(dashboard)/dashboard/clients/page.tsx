@@ -10,8 +10,27 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import React from "react";
+import { DataTable } from "./new/data-table";
+import { columns } from "./columns";
+import db from "@/lib/db";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
 
-export default function ClientsPage() {
+async function getData(userId: string) {
+  const data = await db.client.findMany({
+    where: {
+      userId: userId,
+    },
+  });
+
+  return data;
+}
+
+export default async function ClientsPage() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+  if (!user?.id) return redirect("/");
+  const data = await getData(user.id);
   return (
     <>
       <div className="flex w-full justify-end">
@@ -21,26 +40,19 @@ export default function ClientsPage() {
           </Link>
         </Button>
       </div>
-      <EmptyState
-        title="You dont have any Clients created"
-        description="You currently dont have any Clients. Once created you can
+      {data === undefined || data.length === 0 ? (
+        <EmptyState
+          title="You dont have any Clients created"
+          description="You currently dont have any Clients. Once created you can
         see them here!"
-        buttonText="Create Client"
-        href="/dashboard/clients/new"
-      />
-      <div className="flex w-full items-center justify-center">
-        <Card className="w-[400px]">
-          <div className="flex gap-2">
-            <User className="size=24" />
-            <User2 className="size=24" />
-          </div>
-
-          <CardHeader>
-            <CardTitle className="truncate">Table</CardTitle>
-            <CardDescription className="line-clamp-3"></CardDescription>
-          </CardHeader>
-        </Card>
-      </div>
+          buttonText="Create Client"
+          href="/dashboard/clients/new"
+        />
+      ) : (
+        <div className="container mx-auto py-6">
+          <DataTable columns={columns} data={data} />
+        </div>
+      )}
     </>
   );
 }

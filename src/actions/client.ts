@@ -1,36 +1,37 @@
 "use server";
 
-import { CreateClientSchema, CreateClientSchemaType } from "@/client";
 import db from "@/lib/db";
-
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
+import { parseWithZod } from "@conform-to/zod";
+import { CreateClientSchema } from "@/schemas/client";
+import { toast } from "sonner";
 
-export const createCollection = async (values: CreateClientSchemaType) => {
+export async function createClient(prevState: unknown, formData: FormData) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
   if (!user) {
-    redirect("/");
-  }
-  const validatedFields = CreateClientSchema.safeParse(values);
-
-  if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
+    return redirect("/");
   }
 
-  const { name, category, status } = validatedFields.data;
-  // To check disabled and "spinner"
-  // await wait(5000);
+  const submission = parseWithZod(formData, {
+    schema: CreateClientSchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
 
   await db.client.create({
     data: {
+      name: submission.value.name,
+      status: submission.value.status,
+      workSuspended: submission.value.workSuspended === true ? true : false,
+      category: submission.value.category,
       userId: user.id,
-      name,
-      category,
-      status,
     },
   });
 
-  return { success: "Client created successfully!" };
-};
+  redirect("/dashboard/clients");
+}

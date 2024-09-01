@@ -3,12 +3,11 @@ import { z } from "zod";
 const ClientSchema = z.object({
   id: z.string(),
   name: z.string().min(4, {
-    message: "Collection name must be at least 4 characters",
+    message: "Client name must be at least 4 characters",
   }),
+  workSuspended: z.boolean().optional(),
   category: z.enum([
-    "limited_company_large",
-    "limited_company_small",
-    "limited_company_very_small",
+    "limited_company",
     "partnership",
     "sole_trader",
     "charity",
