@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import db from "@/lib/db";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -75,7 +76,8 @@ export const columns: ColumnDef<Client>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      // IMPORTANT THIS IS THE CLIENT DATA FROM WHICH YOU CAN GET THE ID
+      const client = row.original;
 
       return (
         <DropdownMenu>
@@ -88,7 +90,7 @@ export const columns: ColumnDef<Client>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href={`/dashboard/clients/1`}>Edit</Link>
+              <Link href={`/dashboard/clients/${client.id}`}>Edit</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href={`/dashboard/clients/1/delete`}>Delete</Link>
