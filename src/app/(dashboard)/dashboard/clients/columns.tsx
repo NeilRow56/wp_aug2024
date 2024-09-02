@@ -107,7 +107,9 @@ export const columns: ColumnDef<Client>[] = [
               <Link href={`/dashboard/clients/${client.id}`}>Edit</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={`/dashboard/clients/1/delete`}>Delete</Link>
+              <Link href={`/dashboard/clients/${client.id}/delete`}>
+                Delete
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
