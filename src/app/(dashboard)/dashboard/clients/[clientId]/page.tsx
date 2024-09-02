@@ -20,8 +20,9 @@ async function getData(clientId: string) {
 export default async function IndividualClientPage({
   params,
 }: {
-  params: { id: string };
+  params: { clientId: string };
 }) {
-  const data = await getData(params.id);
+  const data = await getData(params.clientId);
+
   return <EditClientForm data={data} />;
 }
