@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-const ClientSchema = z.object({
-  id: z.string(),
+export const ClientSchema = z.object({
   name: z.string().min(4, {
     message: "Client name must be at least 4 characters",
   }),
@@ -15,7 +14,3 @@ const ClientSchema = z.object({
   ]),
   status: z.enum(["awaiting_ml_checks", "active", "archived"]),
 });
-
-export const CreateClientSchema = ClientSchema.omit({ id: true });
-
-export type CreateClientSchemaType = z.infer<typeof CreateClientSchema>;

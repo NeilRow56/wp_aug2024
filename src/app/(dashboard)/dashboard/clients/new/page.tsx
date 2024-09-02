@@ -21,26 +21,26 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useActionState } from "react";
 import { parseWithZod } from "@conform-to/zod";
 import { useForm } from "@conform-to/react";
 import { clientCategories } from "@/lib/clientCategories";
 
 import { Label } from "@/components/ui/label";
-import { useFormState } from "react-dom";
+
 import { createClient } from "@/actions/client";
 
 import { clientStatus } from "@/lib/clientStatus";
-import { CreateClientSchema } from "@/schemas/client";
+import { ClientSchema } from "@/schemas/client";
 import { SubmitButton } from "@/components/shared/SubmitButton";
 
 export default function CreateClientPage() {
-  const [lastResult, action] = useFormState(createClient, undefined);
+  const [lastResult, action] = useActionState(createClient, undefined);
   const [form, fields] = useForm({
     lastResult,
 
     onValidate({ formData }) {
-      return parseWithZod(formData, { schema: CreateClientSchema });
+      return parseWithZod(formData, { schema: ClientSchema });
     },
 
     shouldValidate: "onBlur",
