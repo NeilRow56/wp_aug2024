@@ -14,6 +14,7 @@ datasource db {
   email        String
   username     String?
   clients      Client[]
+  currentFiles CurrentFile []
   createdAt    DateTime @default(now())
 }
 
@@ -32,10 +33,11 @@ model Client {
 model CurrentFile {
   id                 String @id @default(cuid()) @map("_id") @db.String
   period             Int
-  periodStartDate    DateTime
-  periodEndDate      DateTime
+  slug               String @unique
   clientId           String           @db.String
   Client             Client           @relation(fields: [clientId], references: [id])
+  User         User?   @relation(fields: [userId], references: [id])
+  userId       String? @db.String
 
 
 }

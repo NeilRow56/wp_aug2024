@@ -31,15 +31,6 @@ async function getData(clientId: string) {
     },
     select: {
       period: true,
-      periodEndDate: true,
-      Client: {
-        select: {
-          name: true,
-        },
-      },
-    },
-    orderBy: {
-      periodEndDate: "desc",
     },
   });
 
