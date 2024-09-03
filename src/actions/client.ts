@@ -7,7 +7,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { ClientSchema } from "@/schemas/client";
 import { toast } from "sonner";
 
-export async function createClient(prevState: unknown, formData: FormData) {
+export async function createClient(prevState: any, formData: FormData) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 

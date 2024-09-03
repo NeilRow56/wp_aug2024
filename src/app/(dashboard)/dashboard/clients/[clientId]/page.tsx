@@ -23,14 +23,12 @@ import { Book, Edit, PlusCircle } from "lucide-react";
 import { EmptyState } from "@/components/dashboard/EmptyState";
 import { Badge } from "@/components/ui/badge";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { requireUser } from "@/lib/requireUser";
 
-async function getData(clientId: string) {
-  const data = await db.currentFile.findMany({
+async function getData(userId: string) {
+  const data = await db.client.findMany({
     where: {
-      id: clientId,
-    },
-    select: {
-      period: true,
+      userId: userId,
     },
   });
 
@@ -44,10 +42,7 @@ export default async function ClientIDPage({
 }) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-
-  if (!user) {
-    return redirect("/");
-  }
+  if (!user?.id) return redirect("/");
 
   const data = await getData(params.clientId);
   return (
@@ -83,7 +78,7 @@ export default async function ClientIDPage({
           title="You dont have any Files created"
           description="You currently dont have any files. When created you can see them right here"
           buttonText="Create File"
-          href={`/dashboard/clients/1/create`}
+          href={`/dashboard/clients/${params.clientId}/createFile`}
         />
       ) : (
         <div>

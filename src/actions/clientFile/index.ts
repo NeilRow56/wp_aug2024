@@ -8,7 +8,10 @@ import { ClientFileSchema } from "@/schemas/clientFile";
 
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
-export async function CreateClientFileAction(formData: FormData) {
+export async function CreateClientFileAction(
+  prevState: any,
+  formData: FormData,
+) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
