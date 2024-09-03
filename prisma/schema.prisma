@@ -26,7 +26,21 @@ model Client {
   User         User?   @relation(fields: [userId], references: [id])
   userId       String? @db.String
   createdAt    DateTime @default(now())
+  currentFiles      CurrentFile[]
 }
+
+model CurrentFile {
+  id                 String @id @default(cuid()) @map("_id") @db.String
+  period             Int
+  periodStartDate    DateTime
+  periodEndDate      DateTime
+  clientId           String           @db.String
+  Client             Client           @relation(fields: [clientId], references: [id])
+
+
+}
+
+
 
 enum ClientCategory {
   limited_company
