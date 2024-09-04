@@ -36,5 +36,5 @@ export async function CreateClientFileAction(
     },
   });
 
-  redirect("/dashboard/clients");
+  return redirect(`/dashboard/clients/${formData.get("clientId")}`);
 }

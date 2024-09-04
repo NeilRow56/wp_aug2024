@@ -17,18 +17,33 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Book, Edit, PlusCircle } from "lucide-react";
+import { Book, Edit, MoreHorizontal, PlusCircle } from "lucide-react";
 import { EmptyState } from "@/components/dashboard/EmptyState";
 import { Badge } from "@/components/ui/badge";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { requireUser } from "@/lib/requireUser";
 
-async function getData(userId: string) {
-  const data = await db.client.findMany({
+async function getData(userId: string, clientId: string) {
+  const data = await db.currentFile.findMany({
     where: {
+      clientId: clientId,
       userId: userId,
+    },
+    select: {
+      period: true,
+      slug: true,
+      createdAt: true,
+      id: true,
     },
   });
 
@@ -44,7 +59,7 @@ export default async function ClientIDPage({
   const user = await getUser();
   if (!user?.id) return redirect("/");
 
-  const data = await getData(params.clientId);
+  const data = await getData(user.id, params.clientId);
   return (
     <>
       <div className="container flex w-full justify-end gap-x-4">
@@ -99,18 +114,54 @@ export default async function ClientIDPage({
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableRow>
-                    <TableCell className="font-medium">File Title</TableCell>
-                    <TableCell>
-                      <Badge
-                        variant="outline"
-                        className="bg-green-500/10 text-green-500"
-                      >
-                        Archived
-                      </Badge>
-                    </TableCell>
-                    <TableCell>Date</TableCell>
-                  </TableRow>
+                  {data.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="font-medium">
+                        {item.period}
+                      </TableCell>
+                      <TableCell>
+                        <Badge
+                          variant="outline"
+                          className="bg-green-500/10 text-green-500"
+                        >
+                          Published
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        {new Intl.DateTimeFormat("en-GB", {
+                          dateStyle: "medium",
+                        }).format(item.createdAt)}
+                      </TableCell>
+
+                      <TableCell className="text-end">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button size="icon" variant="ghost">
+                              <MoreHorizontal className="size-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem asChild>
+                              <Link
+                                href={`/dashboard/sites/${params.clientId}/${item.id}`}
+                              >
+                                Edit
+                              </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                              <Link
+                                href={`/dashboard/sites/${params.clientId}/${item.id}/delete`}
+                              >
+                                Delete
+                              </Link>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </CardContent>
