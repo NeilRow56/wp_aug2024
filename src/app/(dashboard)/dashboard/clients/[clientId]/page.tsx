@@ -44,10 +44,29 @@ async function getData(userId: string, clientId: string) {
       slug: true,
       createdAt: true,
       id: true,
+      Client: {
+        select: {
+          name: true,
+        },
+      },
+    },
+
+    orderBy: {
+      createdAt: "desc",
     },
   });
 
   return data;
+}
+
+async function getClientDetails(clientId: string) {
+  const clientDetails = await db.client.findUnique({
+    where: {
+      id: clientId,
+    },
+  });
+
+  return clientDetails;
 }
 
 export default async function ClientIDPage({
@@ -60,6 +79,7 @@ export default async function ClientIDPage({
   if (!user?.id) return redirect("/");
 
   const data = await getData(user.id, params.clientId);
+  const clientDetails = await getClientDetails(params.clientId);
   return (
     <>
       <div className="container flex w-full justify-end gap-x-4">
@@ -83,8 +103,10 @@ export default async function ClientIDPage({
         </Button>
       </div>
       <div className="container flex w-full">
-        <div>
-          <h2 className="text-3xl font-bold text-primary">Client name</h2>
+        <div className="my-8">
+          <h2 className="text-3xl font-bold text-primary">
+            {clientDetails?.name}
+          </h2>
         </div>
       </div>
 
