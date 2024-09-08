@@ -27,11 +27,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Book, Edit, MoreHorizontal, PlusCircle } from "lucide-react";
+import { Book, Edit, PlusCircle } from "lucide-react";
 import { EmptyState } from "@/components/dashboard/EmptyState";
-import { Badge } from "@/components/ui/badge";
+
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { requireUser } from "@/lib/requireUser";
+
+import { ClientFilesDataTable } from "@/components/client/ClientFilesDataTable";
+import { columns } from "./createFile/columns";
 
 async function getData(userId: string, clientId: string) {
   const data = await db.currentFile.findMany({
@@ -43,6 +45,9 @@ async function getData(userId: string, clientId: string) {
       period: true,
       slug: true,
       createdAt: true,
+      shortDate: true,
+      periodStart: true,
+      periodEnd: true,
       id: true,
       Client: {
         select: {
@@ -127,7 +132,7 @@ export default async function ClientIDPage({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Table>
+              {/* <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>Period</TableHead>
@@ -185,7 +190,8 @@ export default async function ClientIDPage({
                     </TableRow>
                   ))}
                 </TableBody>
-              </Table>
+              </Table> */}
+              <ClientFilesDataTable columns={columns} data={data} />
             </CardContent>
           </Card>
         </div>

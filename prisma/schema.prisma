@@ -28,12 +28,18 @@ model Client {
   userId       String? @db.String
   createdAt    DateTime @default(now())
   currentFiles      CurrentFile[]
+  tasks         Task[]
 }
 
 model CurrentFile {
   id                 String @id @default(cuid()) @map("_id") @db.String
   period             String 
   slug               String @unique
+  shortDate          Float  
+  periodStart        String
+  periodEnd          String
+  // periodStart        DateTime
+  // periodEnd          DateTime
   createdAt          DateTime @default(now())
   updatedAt          DateTime @default(now())
   clientId           String           @db.String
@@ -42,6 +48,19 @@ model CurrentFile {
   userId       String? @db.String
 
 
+}
+
+model Task {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  content     String   
+  userId      String   
+  done        Boolean @default(false)       
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime?
+  updatedAt   DateTime @updatedAt
+  clientId  String @db.String
+  client    Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
 }
 
 

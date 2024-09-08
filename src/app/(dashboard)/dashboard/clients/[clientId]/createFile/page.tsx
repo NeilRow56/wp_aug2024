@@ -11,6 +11,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Calendar } from "@/components/ui/calendar";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Atom } from "lucide-react";
@@ -29,6 +37,7 @@ export default function CreateFilePage({
 }) {
   const [slug, setSlugValue] = useState<undefined | string>(undefined);
   const [period, setPeriod] = useState<undefined | string>(undefined);
+
   const [lastResult, action] = useActionState(
     CreateClientFileAction,
     undefined,
@@ -65,7 +74,7 @@ export default function CreateFilePage({
         </Button>
         <h1 className="text-2xl font-bold text-primary">Create File</h1>
       </div>
-      <Card>
+      <Card className="container max-w-[700px]">
         <CardHeader>
           <CardTitle>File Details</CardTitle>
           <CardDescription>Add basic file information.</CardDescription>
@@ -110,6 +119,42 @@ export default function CreateFilePage({
                 <Atom className="mr-2 size-4" /> Generate Slug
               </Button>
               <p className="text-sm text-red-500">{fields.slug.errors}</p>
+            </div>
+            <div className="grid gap-2">
+              <Label>Period start date </Label>
+              <Input
+                key={fields.periodStart.key}
+                name={fields.periodStart.name}
+                defaultValue={fields.periodStart.initialValue}
+                type="text"
+                placeholder=" 01.01.2023"
+              />
+              <p className="text-sm text-red-500">
+                {fields.periodStart.errors}
+              </p>
+            </div>
+            <div className="grid gap-2">
+              <Label>Period end date </Label>
+              <Input
+                key={fields.periodEnd.key}
+                name={fields.periodEnd.name}
+                defaultValue={fields.periodEnd.initialValue}
+                type="text"
+                placeholder=" 01.01.2023"
+              />
+              <p className="text-sm text-red-500">{fields.periodEnd.errors}</p>
+            </div>
+
+            <div className="grid gap-2">
+              <Label>Short date (number) </Label>
+              <Input
+                key={fields.shortDate.key}
+                name={fields.shortDate.name}
+                defaultValue={fields.shortDate.initialValue}
+                placeholder="2024 (If two periods end in the same calendar year add .2 to second period))"
+                type="number"
+              />
+              <p className="text-sm text-red-500">{fields.period.errors}</p>
             </div>
 
             <SubmitButton text="Create File" />
