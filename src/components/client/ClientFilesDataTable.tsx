@@ -44,6 +44,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import React from "react";
+import { Label } from "../ui/label";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -89,6 +90,7 @@ export function ClientFilesDataTable<TData, TValue>({
           }
           className="max-w-sm border-primary"
         />
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto border-primary">
@@ -116,8 +118,8 @@ export function ClientFilesDataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
-        <Table>
+      <div className="rounded-md border px-24">
+        <Table className="">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -136,7 +138,7 @@ export function ClientFilesDataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

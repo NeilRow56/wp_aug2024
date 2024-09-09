@@ -9,8 +9,6 @@ import { FormDataSchema } from "@/schemas/formData";
 
 type Inputs = z.infer<typeof FormDataSchema>;
 
-// Form Data
-
 const steps = [
   {
     id: "Step 1",
@@ -24,7 +22,6 @@ const steps = [
   },
   { id: "Step 3", name: "Complete" },
 ];
-// End of Form Data
 
 export default function MultiStepForm() {
   const [previousStep, setPreviousStep] = useState(0);

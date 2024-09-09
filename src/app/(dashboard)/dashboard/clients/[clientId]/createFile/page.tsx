@@ -29,14 +29,16 @@ import { parseWithZod } from "@conform-to/zod";
 import { ClientFileSchema } from "@/schemas/clientFile";
 import slugify from "react-slugify";
 import { toast } from "sonner";
+import { Controller } from "react-hook-form";
+import { FormControl } from "@/components/ui/form";
 
 export default function CreateFilePage({
   params,
 }: {
   params: { clientId: string };
 }) {
-  const [slug, setSlugValue] = useState<undefined | string>(undefined);
-  const [period, setPeriod] = useState<undefined | string>(undefined);
+  const [slug, setSlugValue] = useState<undefined | string>("");
+  const [period, setPeriod] = useState<undefined | string>("");
 
   const [lastResult, action] = useActionState(
     CreateClientFileAction,
@@ -89,14 +91,16 @@ export default function CreateFilePage({
             <input type="hidden" name="clientId" value={params.clientId} />
             <div className="grid gap-2">
               <Label>Period </Label>
+
               <Input
                 key={fields.period.key}
                 name={fields.period.name}
-                defaultValue={fields.period.initialValue}
+                // defaultValue={fields.period.initialValue}
                 placeholder="Period ending 31.12.2023"
                 onChange={(e) => setPeriod(e.target.value)}
                 value={period}
               />
+
               <p className="text-sm text-red-500">{fields.period.errors}</p>
             </div>
 
@@ -120,13 +124,14 @@ export default function CreateFilePage({
               </Button>
               <p className="text-sm text-red-500">{fields.slug.errors}</p>
             </div>
+
             <div className="grid gap-2">
               <Label>Period start date </Label>
               <Input
                 key={fields.periodStart.key}
                 name={fields.periodStart.name}
                 defaultValue={fields.periodStart.initialValue}
-                type="text"
+                type="date"
                 placeholder=" 01.01.2023"
               />
               <p className="text-sm text-red-500">
@@ -139,7 +144,7 @@ export default function CreateFilePage({
                 key={fields.periodEnd.key}
                 name={fields.periodEnd.name}
                 defaultValue={fields.periodEnd.initialValue}
-                type="text"
+                type="date"
                 placeholder=" 01.01.2023"
               />
               <p className="text-sm text-red-500">{fields.periodEnd.errors}</p>

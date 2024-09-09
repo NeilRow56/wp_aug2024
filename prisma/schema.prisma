@@ -36,10 +36,10 @@ model CurrentFile {
   period             String 
   slug               String @unique
   shortDate          Float  
-  periodStart        String
-  periodEnd          String
-  // periodStart        DateTime
-  // periodEnd          DateTime
+  // periodStart        String
+  // periodEnd          String
+  periodStart        DateTime
+  periodEnd          DateTime
   createdAt          DateTime @default(now())
   updatedAt          DateTime @default(now())
   clientId           String           @db.String

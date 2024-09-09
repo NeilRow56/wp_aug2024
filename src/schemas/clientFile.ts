@@ -6,6 +6,6 @@ export const ClientFileSchema = z.object({
   }),
   slug: z.string().min(1).max(100),
   shortDate: z.coerce.number().multipleOf(0.1),
-  periodStart: z.string(),
-  periodEnd: z.string(),
+  periodStart: z.coerce.date(),
+  periodEnd: z.coerce.date(),
 });

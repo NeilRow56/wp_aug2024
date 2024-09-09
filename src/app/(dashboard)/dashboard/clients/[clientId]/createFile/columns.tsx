@@ -123,19 +123,19 @@ export const columns: ColumnDef<CurrentFile>[] = [
         </Button>
       );
     },
-    // cell: ({ row }) => {
-    //   const date = new Date(row.getValue("periodStart"));
-    //   const formattedDate = date.toLocaleDateString("en-GB", {
-    //     day: "2-digit",
-    //     month: "short",
-    //     year: "numeric",
-    //   });
-    //   return (
-    //     <div className="flex w-full items-center">
-    //       <span className="capitalize">{formattedDate}</span>
-    //     </div>
-    //   );
-    // },
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("periodStart"));
+      const formattedDate = date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+      return (
+        <div className="flex w-full items-center">
+          <span className="capitalize">{formattedDate}</span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "periodEnd",
@@ -151,19 +151,19 @@ export const columns: ColumnDef<CurrentFile>[] = [
         </Button>
       );
     },
-    // cell: ({ row }) => {
-    //   const date = new Date(row.getValue("periodEnd"));
-    //   const formattedDate = date.toLocaleDateString("en-GB", {
-    //     day: "2-digit",
-    //     month: "short",
-    //     year: "numeric",
-    //   });
-    //   return (
-    //     <div className="flex w-full items-center">
-    //       <span className="capitalize">{formattedDate}</span>
-    //     </div>
-    //   );
-    // },
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("periodEnd"));
+      const formattedDate = date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+      return (
+        <div className="flex w-full items-center">
+          <span className="capitalize">{formattedDate}</span>
+        </div>
+      );
+    },
   },
 
   {
