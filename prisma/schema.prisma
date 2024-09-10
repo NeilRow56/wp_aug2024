@@ -34,7 +34,7 @@ model Client {
 model CurrentFile {
   id                 String @id @default(cuid()) @map("_id") @db.String
   period             String 
-  slug               String @unique
+  slug               String 
   shortDate          Float  
   // periodStart        String
   // periodEnd          String

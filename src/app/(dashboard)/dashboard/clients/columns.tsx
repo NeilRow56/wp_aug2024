@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -28,12 +29,24 @@ export type Client = {
   status: "awaiting_ml_checks" | "active" | "archived";
 };
 
+function getStatusColor(status: string) {
+  if (status === "FINISHED") {
+    return "bg-green-600";
+  } else if (status === "REFUSED") {
+    return "bg-red-500";
+  } else if (status === "active") {
+    return "bg-yellow-500";
+  } else {
+    return "bg-blue-500";
+  }
+}
 export const columns: ColumnDef<Client>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
+          className="px-0"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -48,6 +61,7 @@ export const columns: ColumnDef<Client>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="px-0"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -62,6 +76,7 @@ export const columns: ColumnDef<Client>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="px-0"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -70,12 +85,21 @@ export const columns: ColumnDef<Client>[] = [
         </Button>
       );
     },
+    // cell: ({ row }) => {
+    //   const value: string = row.getValue("event_status");
+    //   const color = getStatusColor(value);
+    //   return (
+    //     <div className={cn("rounded-full px-2 text-white", color)}>{value}</div>
+    //   );
+    // },
   },
+
   {
     accessorKey: "workSuspended",
     header: ({ column }) => {
       return (
         <Button
+          className="px-0"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -106,10 +130,12 @@ export const columns: ColumnDef<Client>[] = [
               <Link href={`/dashboard/clients/${client.id}`}>Files</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={`/dashboard/clients/${client.id}/edit`}>Edit</Link>
+              <Link href={`/dashboard/clients/${client.id}/editClient`}>
+                Edit
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={`/dashboard/clients/${client.id}/delete`}>
+              <Link href={`/dashboard/clients/${client.id}/deleteClient`}>
                 Delete
               </Link>
             </DropdownMenuItem>

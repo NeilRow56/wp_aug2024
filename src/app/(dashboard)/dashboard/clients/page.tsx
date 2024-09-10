@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle, User, User2 } from "lucide-react";
 import {
   Card,
+  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -10,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import React from "react";
-import { DataTable } from "./new/data-table";
+import { DataTable } from "./newClient/data-table";
 import { columns } from "./columns";
 import db from "@/lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -35,7 +36,7 @@ export default async function ClientsPage() {
     <>
       <div className="flex w-full justify-end">
         <Button asChild>
-          <Link href={"/dashboard/clients/new"}>
+          <Link href={"/dashboard/clients/newClient"}>
             <PlusCircle className="mr-2 size-4" /> Create Client
           </Link>
         </Button>
@@ -46,11 +47,23 @@ export default async function ClientsPage() {
           description="You currently dont have any Clients. Once created you can
         see them here!"
           buttonText="Create Client"
-          href="/dashboard/clients/new"
+          href="/dashboard/clients/newClient"
         />
       ) : (
-        <div className="container mx-auto py-6">
-          <DataTable columns={columns} data={data} />
+        <div className="max-auto container">
+          <Card>
+            <CardHeader>
+              <CardTitle className="mb-2 font-bold text-primary">
+                Clients
+              </CardTitle>
+              <CardDescription>
+                Manage your Clients in a simple and intuitive interface
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <DataTable columns={columns} data={data} />
+            </CardContent>
+          </Card>
         </div>
       )}
     </>

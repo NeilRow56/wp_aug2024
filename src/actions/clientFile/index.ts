@@ -7,6 +7,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { ClientFileSchema } from "@/schemas/clientFile";
 
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { requireUser } from "@/lib/requireUser";
 
 export async function CreateClientFileAction(
   prevState: any,
@@ -37,6 +38,19 @@ export async function CreateClientFileAction(
 
       userId: user.id,
       clientId: formData.get("clientId") as string,
+    },
+  });
+
+  return redirect(`/dashboard/clients/${formData.get("clientId")}`);
+}
+
+export async function DeleteClientFile(formData: FormData) {
+  const user = await requireUser();
+
+  const data = await db.currentFile.delete({
+    where: {
+      userId: user.id,
+      id: formData.get("clientId") as string,
     },
   });
 

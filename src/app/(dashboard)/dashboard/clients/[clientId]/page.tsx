@@ -123,74 +123,17 @@ export default async function ClientIDPage({
           href={`/dashboard/clients/${params.clientId}/createFile`}
         />
       ) : (
-        <div>
+        <div className="max-auto container">
           <Card>
             <CardHeader>
-              <CardTitle>Files</CardTitle>
+              <CardTitle className="mb-2 font-bold text-primary">
+                Files
+              </CardTitle>
               <CardDescription>
                 Manage your Files in a simple and intuitive interface
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {/* <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Period</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Created At</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {data.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell className="font-medium">
-                        {item.period}
-                      </TableCell>
-                      <TableCell>
-                        <Badge
-                          variant="outline"
-                          className="bg-green-500/10 text-green-500"
-                        >
-                          Published
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        {new Intl.DateTimeFormat("en-GB", {
-                          dateStyle: "medium",
-                        }).format(item.createdAt)}
-                      </TableCell>
-
-                      <TableCell className="text-end">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button size="icon" variant="ghost">
-                              <MoreHorizontal className="size-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem asChild>
-                              <Link
-                                href={`/dashboard/sites/${params.clientId}/${item.id}`}
-                              >
-                                Edit
-                              </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                              <Link
-                                href={`/dashboard/sites/${params.clientId}/${item.id}/delete`}
-                              >
-                                Delete
-                              </Link>
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table> */}
               <ClientFilesDataTable columns={columns} data={data} />
             </CardContent>
           </Card>
