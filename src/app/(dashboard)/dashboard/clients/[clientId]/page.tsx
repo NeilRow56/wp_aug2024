@@ -33,7 +33,7 @@ import { EmptyState } from "@/components/dashboard/EmptyState";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 import { ClientFilesDataTable } from "@/components/client/ClientFilesDataTable";
-import { columns } from "./createFile/columns";
+import { columns } from "./columns";
 
 async function getData(userId: string, clientId: string) {
   const data = await db.currentFile.findMany({
@@ -48,6 +48,7 @@ async function getData(userId: string, clientId: string) {
       shortDate: true,
       periodStart: true,
       periodEnd: true,
+      clientId: true,
       id: true,
       Client: {
         select: {

@@ -21,6 +21,7 @@ export type CurrentFile = {
   id: string;
   period: string;
   createdAt: Date;
+  clientId: string;
 };
 
 export const columns: ColumnDef<CurrentFile>[] = [
@@ -82,33 +83,7 @@ export const columns: ColumnDef<CurrentFile>[] = [
       );
     },
   },
-  // {
-  //   accessorKey: "shortDate",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         variant="ghost"
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       >
-  //         Date (numeric)
-  //         <ArrowUpDown className="ml-2 h-4 w-4" />
-  //       </Button>
-  //     );
-  //   },
-  //   cell: ({ row }) => {
-  //     const date = new Date(row.getValue("shortDate"));
-  //     const formattedDate = date.toLocaleDateString("en-GB", {
-  //       day: "2-digit",
-  //       month: "short",
-  //       year: "numeric",
-  //     });
-  //     return (
-  //       <div className="flex w-full items-center">
-  //         <span className="capitalize">{formattedDate}</span>
-  //       </div>
-  //     );
-  //   },
-  // },
+
   {
     accessorKey: "periodStart",
     header: ({ column }) => {
@@ -171,7 +146,7 @@ export const columns: ColumnDef<CurrentFile>[] = [
     header: "Actions",
     cell: ({ row }) => {
       // IMPORTANT THIS IS THE CLIENT DATA FROM WHICH YOU CAN GET THE ID
-      const client = row.original;
+      const currentFile = row.original;
 
       return (
         <DropdownMenu>
@@ -184,13 +159,23 @@ export const columns: ColumnDef<CurrentFile>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href={`/dashboard/clients/${client.id}`}>Files</Link>
+              <Link
+                href={`/dashboard/clients/${currentFile.clientId}/${currentFile.id}`}
+              >
+                Files
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={`/dashboard/clients/${client.id}/edit`}>Edit</Link>
+              <Link
+                href={`/dashboard/clients/${currentFile.clientId}/${currentFile.id}/editClientFile`}
+              >
+                Edit
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={`/dashboard/clients/${client.id}/delete`}>
+              <Link
+                href={`/dashboard/clients/${currentFile.clientId}/${currentFile.id}/deleteClientFile`}
+              >
                 Delete
               </Link>
             </DropdownMenuItem>

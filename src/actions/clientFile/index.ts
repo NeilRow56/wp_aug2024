@@ -44,6 +44,34 @@ export async function CreateClientFileAction(
   return redirect(`/dashboard/clients/${formData.get("clientId")}`);
 }
 
+export async function EditFileActions(prevState: any, formData: FormData) {
+  const user = await requireUser();
+
+  const submission = parseWithZod(formData, {
+    schema: ClientFileSchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+
+  const data = await db.currentFile.update({
+    where: {
+      userId: user.id,
+      id: formData.get("currentFileId") as string,
+    },
+    data: {
+      period: submission.value.period,
+      slug: submission.value.slug,
+      shortDate: submission.value.shortDate,
+      periodStart: submission.value.periodStart,
+      periodEnd: submission.value.periodEnd,
+    },
+  });
+
+  return redirect(`/dashboard/clients/${formData.get("clientId")}`);
+}
+
 export async function DeleteClientFile(formData: FormData) {
   const user = await requireUser();
 

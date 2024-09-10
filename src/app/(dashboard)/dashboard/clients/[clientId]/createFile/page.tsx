@@ -11,14 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Calendar } from "@/components/ui/calendar";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Atom } from "lucide-react";
@@ -29,8 +22,6 @@ import { parseWithZod } from "@conform-to/zod";
 import { ClientFileSchema } from "@/schemas/clientFile";
 import slugify from "react-slugify";
 import { toast } from "sonner";
-import { Controller } from "react-hook-form";
-import { FormControl } from "@/components/ui/form";
 
 export default function CreateFilePage({
   params,
@@ -95,7 +86,7 @@ export default function CreateFilePage({
               <Input
                 key={fields.period.key}
                 name={fields.period.name}
-                // defaultValue={fields.period.initialValue}
+                defaultValue={fields.period.initialValue}
                 placeholder="Period ending 31.12.2023"
                 onChange={(e) => setPeriod(e.target.value)}
                 value={period}
@@ -151,12 +142,11 @@ export default function CreateFilePage({
             </div>
 
             <div className="grid gap-2">
-              <Label>Short date (number) </Label>
+              <Label>Short date (number e.g. 2024) </Label>
               <Input
                 key={fields.shortDate.key}
                 name={fields.shortDate.name}
                 defaultValue={fields.shortDate.initialValue}
-                placeholder="2024 (If two periods end in the same calendar year add .2 to second period))"
                 type="number"
               />
               <p className="text-sm text-red-500">{fields.period.errors}</p>

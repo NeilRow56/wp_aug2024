@@ -36,8 +36,7 @@ model CurrentFile {
   period             String 
   slug               String 
   shortDate          Float  
-  // periodStart        String
-  // periodEnd          String
+
   periodStart        DateTime
   periodEnd          DateTime
   createdAt          DateTime @default(now())

@@ -55,6 +55,8 @@ export function EditClientForm({ data }: EditClientProps) {
     shouldRevalidate: "onInput",
   });
 
+  console.log(data);
+
   return (
     <>
       <div className="flex items-center gap-4">
@@ -68,7 +70,9 @@ export function EditClientForm({ data }: EditClientProps) {
       <div className="flex flex-grow flex-col items-center justify-center">
         <Card className="w-full max-w-[650px]">
           <CardHeader>
-            <CardTitle>Client Details</CardTitle>
+            <CardTitle className="space-y-2 text-3xl font-bold text-primary">
+              Client Details
+            </CardTitle>
             <CardDescription>
               Edit client information in the form below.
             </CardDescription>
